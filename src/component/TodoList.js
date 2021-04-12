@@ -1,27 +1,12 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
-  // const handleDelete = ({ id }) => {
-  //   setTodos(todos.filter((todo) => todo.id !== id));
-  // };
-
-  const handleDelete = useCallback(({ id }) => {
+  const handleDelete = ({ id }) => {
     setTodos(todos.filter((todo) => todo.id !== id));
-  });
+  };
 
-  // const handleComplete = (todo) => {
-  //   setTodos(
-  //     todos.map((item) => {
-  //       if (item.id === todo.id) {
-  //         return { ...item, completed: !item.completed };
-  //       }
-  //       return item;
-  //     })
-  //   );
-  // };
-
-  const handleComplete = useCallback((todo) => {
+  const handleComplete = (todo) => {
     setTodos(
       todos.map((item) => {
         if (item.id === todo.id) {
@@ -30,17 +15,12 @@ const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
         return item;
       })
     );
-  });
+  };
 
-  // const handleEdit = ({ id }) => {
-  //   const findTodo = todos.find((todo) => todo.id === id);
-  //   setEditTodo(findTodo);
-  // };
-
-  const handleEdit = useCallback(({ id }) => {
+  const handleEdit = ({ id }) => {
     const findTodo = todos.find((todo) => todo.id === id);
     setEditTodo(findTodo);
-  });
+  };
 
   return (
     <TodoListItemFullWrapper>
@@ -50,7 +30,7 @@ const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
             <input
               type="text"
               value={todo.title}
-              className="listItem"
+              className={todo.completed ? 'listItemFinish' : 'listItem'}
               onChange={(e) => e.preventDefault()}
             />
             <button
@@ -86,6 +66,13 @@ const TodoListItemFullWrapper = styled.div`
       width: 230px;
       border: none;
       border-radius: 4px;
+    }
+
+    .listItemFinish {
+      width: 230px;
+      border: none;
+      border-radius: 4px;
+      text-decoration: line-through;
     }
 
     button {

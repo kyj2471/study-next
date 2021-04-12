@@ -58,7 +58,6 @@ const Header = ({ myModal, setMyModal }) => {
 
   const handleModal = (e) => {
     setMyModal(!myModal);
-    console.log(myModal);
   };
 
   const updateTime = () => {

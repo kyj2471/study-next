@@ -47,13 +47,6 @@ export default function Modal({
   );
 }
 
-// const ModalContainer = styled.div`
-//   position: absolute;
-//   width: 375px;
-//   height: 400px;
-//   left: 50%;
-//   top: 50%;
-// `;
 const ModalContainer = styled.div`
   display: flex;
   justify-content: center;
