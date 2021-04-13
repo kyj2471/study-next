@@ -57,9 +57,9 @@ const TodoForm = memo(
       }
     }, [setInput, editTodo]);
 
-    const handleChange = (e) => {
+    const handleChange = useCallback((e) => {
       setInput(e.target.value);
-    };
+    }, []);
 
     const handleSubmit = (e) => {
       e.preventDefault();

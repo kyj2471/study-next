@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from "react";
+import React, { memo, useCallback } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 
@@ -51,11 +51,14 @@ const TodoListItemFullWrapper = styled.div`
 `;
 
 const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
-  const handleDelete = ({ id }) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+  const handleDelete = useCallback(
+    ({ id }) => {
+      setTodos(todos.filter((todo) => todo.id !== id));
+    },
+    [todos]
+  );
 
-  const handleComplete = (todo) => {
+  const handleComplete = useCallback((todo) => {
     setTodos(
       todos.map((item) => {
         if (item.id === todo.id) {
@@ -64,12 +67,12 @@ const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
         return item;
       })
     );
-  };
+  });
 
-  const handleEdit = ({ id }) => {
+  const handleEdit = useCallback(({ id }) => {
     const findTodo = todos.find((todo) => todo.id === id);
     setEditTodo(findTodo);
-  };
+  });
 
   return (
     <TodoListItemFullWrapper>
