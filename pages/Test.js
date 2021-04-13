@@ -1,7 +1,7 @@
 const Test = () => {
   return (
     <div>
-      <div>asdadsad</div>
+      <div>test 페이지 입니다</div>
     </div>
   );
 };

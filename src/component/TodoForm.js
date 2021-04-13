@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, useEffect, memo, useCallback } from "react";
 import styled from "styled-components";
 
 const HeadTodoForm = styled.div`
@@ -63,16 +63,18 @@ const TodoForm = memo(
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      if (!editTodo) {
+      if (editTodo) {
+        updateTodo(input, editTodo.id, editTodo.completed);
+        setInput("");
+      } else {
         setTodos([
           ...todos,
           { id: Date.now(), title: input, completed: false },
         ]);
         setInput("");
-      } else {
-        updateTodo(input, editTodo.id, editTodo.completed);
       }
     };
+
     return (
       <HeadTodoForm>
         <form onSubmit={handleSubmit}>

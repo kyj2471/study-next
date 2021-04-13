@@ -54,7 +54,7 @@ export default function Modal({
             <div>
               <img
                 src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-                alt="asd"
+                alt="weather"
               />
             </div>
             <div className="weatherList">

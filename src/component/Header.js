@@ -7,11 +7,13 @@ const NavHead = styled.div`
   display: flex;
   justify-content: space-around;
   padding-top: 30px;
+  max-width: 450px;
+  margin: 0 auto;
 `;
 
 const Header = ({ myModal, setMyModal }) => {
-  let time = new Date().toLocaleTimeString();
-  const [ntime, setNtime] = useState(time);
+  // let time = new Date().toLocaleTimeString();
+  // const [ntime, setNtime] = useState(time);
   const [weather, setWeather] = useState("");
   const [loading, setLoading] = useState("true");
   const [myLocation, setMyLocation] = useState({
@@ -66,11 +68,11 @@ const Header = ({ myModal, setMyModal }) => {
     setMyModal(!myModal);
   };
 
-  const updateTime = () => {
-    time = new Date().toLocaleTimeString();
-    setNtime(time);
-  };
-  setInterval(updateTime, 1000);
+  // const updateTime = () => {
+  //   time = new Date().toLocaleTimeString();
+  //   setNtime(time);
+  // };
+  // setInterval(updateTime, 1000);
 
   return (
     <NavHead>
@@ -87,7 +89,7 @@ const Header = ({ myModal, setMyModal }) => {
       ) : (
         ""
       )}
-      <div>{ntime}</div>
+      {/* <div>{ntime}</div> */}
       <div>{moment().format("YYYY-MM-DD")}</div>
     </NavHead>
   );

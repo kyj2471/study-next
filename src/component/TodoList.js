@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { useEffect, memo } from "react";
 import styled from "styled-components";
 import Link from "next/link";
 
@@ -76,7 +76,7 @@ const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
       {todos.map((todo) => {
         return (
           <div className="todoListItem" key={todo.id}>
-            <Link href={`/pages/view/${todo.id}`}>
+            <Link href={`/post/${todo.title}`}>
               <input
                 type="text"
                 value={todo.title}
