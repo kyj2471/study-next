@@ -20,6 +20,7 @@ const MainTodoTitle = styled.div`
 const Post = () => {
   const router = useRouter();
   const { id } = router.query;
+  console.log(router);
 
   return (
     <ContainerBox>

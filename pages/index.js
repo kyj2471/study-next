@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TodoForm from "../src/component/TodoForm";
 import TodoList from "../src/component/TodoList";
 import styled from "styled-components";
