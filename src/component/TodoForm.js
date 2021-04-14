@@ -15,7 +15,6 @@ const HeadTodoForm = styled.div`
   .todoButton {
     width: 140px;
     height: 45px;
-    font-family: "Roboto", sans-serif;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2.5px;

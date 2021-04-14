@@ -20,6 +20,7 @@ const ModalContainer = styled.div`
     height: 350px;
     border: 1px solid black;
     border-radius: 10px;
+    text-align: center;
   }
 
   .weatherList {
@@ -28,6 +29,27 @@ const ModalContainer = styled.div`
 
   button {
     margin-top: 10px;
+    width: 50px;
+    height: 35px;
+    font-family: "Roboto", sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #a6ffcf;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+  }
+  button:hover {
+    background-color: #2ee59d;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
   }
 `;
 
@@ -69,7 +91,7 @@ export default function Modal({
               오늘의 최고 기온은 : {weather.main.temp_max}도 입니다
             </div>
 
-            <button onClick={handleModalCancel}>x</button>
+            <button onClick={handleModalCancel}>취소</button>
           </div>
         </ModalContainer>
       )}

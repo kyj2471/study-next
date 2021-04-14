@@ -58,16 +58,19 @@ const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
     [todos]
   );
 
-  const handleComplete = useCallback((todo) => {
-    setTodos(
-      todos.map((item) => {
-        if (item.id === todo.id) {
-          return { ...item, completed: !item.completed };
-        }
-        return item;
-      })
-    );
-  });
+  const handleComplete = useCallback(
+    (todo) => {
+      setTodos(
+        todos.map((item) => {
+          if (item.id === todo.id) {
+            return { ...item, completed: !item.completed };
+          }
+          return item;
+        })
+      );
+    },
+    [todos]
+  );
 
   const handleEdit = useCallback(({ id }) => {
     const findTodo = todos.find((todo) => todo.id === id);
