@@ -130,3 +130,197 @@ ssg => staticprops,path ssr => serversideprops
 - issg...
 - 지금보니까 고작 투두 하나만드는데 컴퍼넌트 구조도 그렇고 처음에 페이지에대한 이해도 부족이있어서 너무 막생각했다...
 - 코드적인 부분 말고 전체 structure이해하고 목적에 맞게 사용하자
+
+---
+
+# Redux
+
+### store
+
+- 기본적으로 상태에관한건 여기서 집중관리됨.
+- 커다란 JSON의 결정체라고 생각하자
+  {
+  value:0,
+  }
+  이런식으로 저장된다. 그런데 규모가 크다면
+  {
+  //세션과 관련된 것들
+  sessoin:{
+  loggedIn: true,
+  user:{
+  id:"123123",
+  screenName: "hellomarket",
+  },
+  },
+
+  //타임라인 관련된 것들
+  timeLine:{
+  type:"home",
+  statuses:[
+  {id:1, screenName:"hellomarket", text:"hello"},
+  {id:2, screenName:"hellomarket2", text:"hello2"},
+  ],
+  },
+
+  //알림과 관련
+  notification:[],
+  }
+
+이런식으로 카테고리별로 나눠서 하게된다.
+
+### Action / Action Creator
+
+- store 및 store에 존재하는 state는 신성한거다 React component같은 하등종족이 낄 곳이 아니다.
+
+- 그럼 이거 어떻게 쓰냐? 그래서 Action이라는 의식을 거쳐야함. 이벤트 드리븐이라 생각
+
+[Action]
+
+- 어떠한 포맷을 가지고 있는 녀석일까?
+  {
+  type: "액션의 종류를 한번에 식별할 수 있는 문자열 혹은 심볼",
+  payload: "액션의 실행에 필요한 데이터",
+  }
+- 느낌이 온다? 타입이야 타입일것이니 넘어가고 payload...? 액션의 실행에 필요한 데이터?
+  이걸 번역기에 넣으면 뜻이 유효탑재량이다. 느낌알겠으니 계속가보자
+
+{
+type:"@@myapp/ADD_VALUE",
+payload:2,
+}
+
+- 위의 JSON 객체가 뭘 의미할까? 카운터 값을 2배 늘릴때 대충 저런식일거란 느낌이 온다.
+- @@myapp이란 Prefix가 오는 건 다른 사람이 쓴 코드와의 충돌을 피하기 위함이다.
+- 그런데 이런 배열을 수작업으로 하는것도 말안됨
+- @@myapp/ADD_VALUE Action명 문자열로 쓰는것도 싫다.
+- 당연하겠지만 이런걸 편하게 쓰기위해 함수와 상수를 준비하자.
+- !!!외부 파일이 참고 할 수도 있으니 제대로 export 해야한다.
+
+[Reducer]
+
+- 이녀석은 Store의 문지기 라고 생각하자.
+- 무슨일 하는 녀석일까?
+- 이전 상태가 Action을 거치면서 나온 새로운 State를 만드는 조작이라 생각하자.
+
+Old state
+===> REDUCER ===> New State
+Action
+
+```js
+import {ADD_VALUE} from "./actions";
+
+export default (state = {value:0}, action) => {
+  switch (action.type){
+    case ADD_VALUE:
+      return {...state, value: state.value + action.payload}
+  };
+  default:
+    return:state;
+}
+```
+
+- 초기상태는 Reducer의 Default 인수에서 정의됨.
+- 상태가 변할 때 전해진 `state`는 그 자체의 값으로 대체되는 것이 아님 새로운 것이 합성되는 것처럼 쓰여짐.
+- 그냥 처음에 디폴트값으로 정의되고 액션 통해서 변하는데 그건 기존 상태값이 바뀌는게 아니고 새로운게 나온다 생각하자.
+
+{
+value:2,
+}
+
+- 바뀌면 store에서 바로 반영되서 위에 처럼 나온다.
+- 자 근데 위에서 한 내용은 기본 중요하지만 저렇겐 못쓴다. 예로 트위터라는 곳에서 리듀서를 사용한다면 redux에서 제공하는 combineReducers함수를 이용하여 아래와 같이 사용한다.
+
+```js
+import { combineReducers } from "redux";
+
+const sessionReducer =
+  ((state = { loggedIn: false, user: null }),
+  (payload) => {
+    //something
+  });
+
+const timelineReducer =
+  ((state = { type: "home", statuses: [] }),
+  (payload) => {
+    //something
+  });
+
+const notificationReducer = (state = [], payload) => {
+  //something
+};
+
+export default combineReducers({
+  session: sessionReducer,
+  timeline: timelineReducer,
+  notification: notificationReducer,
+});
+```
+
+- 그냥 각자 스테이트값 각자다른 데이터로 처리하고 한번에 익스포트 해주는건가...?
+- Reducer 분할에 쓰이는 키가 고대로 state 분할에도 쓰임
+- Reducer정의 자체가 다른 파일로 나누는 거다.
+
+[connect]
+
+- react component자체는 redux 흐름 타는게 불가능임.
+- 흐름탈라면 React Redux에서 제공하는 connect함수를 이용해야함.
+- 함수판,클래스판 두개다 다르게 되있음.
+
+```js
+>>>>>>>> Functional
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addValue } from './actions';
+​
+const Counter = ({ value, dispatchAddValue }) => (
+    <div>
+        Value: {value}
+        <a href="#" onClick={e => dispatchAddValue(1)}>+1</a>
+        <a href="#" onClick={e => dispatchAddValue(2)}>+2</a>
+    </div>
+);
+​
+export default connect(
+    state => ({ value: state.value }),
+    dispatch => ({ dispatchAddValue: amount => dispatch(addValue(amount)) })
+)(Counter)
+>>>>>>>>> Class Component
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { addValue } from './actions';
+​
+class Counter extends Component {
+    render() {
+        const { value, dispatchAddValue } = this.props;
+        return (
+            <div>
+                Value: {value}
+                <a href="#" onClick={e => dispatchAddValue(1)}>+1</a>
+                <a href="#" onClick={e => dispatchAddValue(2)}>+2</a>
+            </div>
+        );
+    }
+}
+​
+export default connect(
+    state => ({ value: state.value }),
+    dispatch => ({ dispatchAddValue: amount => dispatch(addValue(amount)) })
+)(Counter)
+```
+
+- Component가 Store로 뭔가 받는다? 그걸 props를 통해 받는다.
+- Props는 immutabale하다. 즉, 상태가 변경도면 component가 다시 만들어진다.
+- 여기까지 염두해 두고 connect를 실행하고 있는 주변코드를 보자.
+
+---
+
+### 아래 4번까지 이해하고 각 함수 보러가자...ㅎ
+
+1. store가 가진 state를 어떻게 props에 엮을지 정한다. 이런거 하는 함수를 mapStateProps 라고 부른다.
+2. Reducer에 action을 알리는 함수 dispatch를 어떻게 엮어낼지 정하자.
+3. 위에 두가지가 적용된 props를 받을 component를 정한다.
+4. store와 reducer를 연결 시킬 수 있도록 만들어진 component가 반환값이다.
+
+---
+
+[mapStateToProps]

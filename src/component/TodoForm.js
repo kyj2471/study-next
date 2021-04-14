@@ -62,6 +62,7 @@ const TodoForm = memo(
 
     const handleSubmit = (e) => {
       e.preventDefault();
+
       if (editTodo) {
         updateTodo(input, editTodo.id, editTodo.completed);
         setInput("");
@@ -79,7 +80,7 @@ const TodoForm = memo(
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="YOUR TODO"
+            placeholder="할일은?"
             className="todoInput"
             value={input}
             required
