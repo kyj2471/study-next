@@ -1,5 +1,5 @@
-import React, { useState, useEffect, memo, useCallback } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect, memo, useCallback } from 'react';
+import styled from 'styled-components';
 
 const HeadTodoForm = styled.div`
   display: flex;
@@ -42,14 +42,14 @@ const TodoForm = memo(({ input, setInput, todos, setTodos, editTodo, setEditTodo
   const updateTodo = (title, id, completed) => {
     const newTodo = todos.map((todo) => (todo.id === id ? { title, id, completed } : todo));
     setTodos(newTodo);
-    setEditTodo("");
+    setEditTodo('');
   };
 
   useEffect(() => {
     if (editTodo) {
       setInput(editTodo.title);
     } else {
-      setInput("");
+      setInput('');
     }
   }, [setInput, editTodo]);
 
@@ -62,17 +62,24 @@ const TodoForm = memo(({ input, setInput, todos, setTodos, editTodo, setEditTodo
 
     if (editTodo) {
       updateTodo(input, editTodo.id, editTodo.completed);
-      setInput("");
+      setInput('');
     } else {
       setTodos([...todos, { id: Date.now(), title: input, completed: false }]);
-      setInput("");
+      setInput('');
     }
   };
 
   return (
     <HeadTodoForm>
       <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="할일은?" className="todoInput" value={input} required onChange={handleChange} />
+        <input
+          type="text"
+          placeholder="할일은?"
+          className="todoInput"
+          value={input}
+          required
+          onChange={handleChange}
+        />
         <button type="submit" className="todoButton" onClick={handleSubmit}>
           SUBMIT
         </button>

@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const ModalContainer = styled.div`
   display: flex;
@@ -31,7 +31,7 @@ const ModalContainer = styled.div`
     margin-top: 10px;
     width: 50px;
     height: 35px;
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2.5px;
@@ -53,14 +53,7 @@ const ModalContainer = styled.div`
   }
 `;
 
-export default function Modal({
-  myModal,
-  setMyModal,
-  weather,
-  setWeather,
-  loading,
-  setLoading,
-}) {
+export default function Modal({ myModal, setMyModal, weather, setWeather, loading, setLoading }) {
   const handleModalCancel = (e) => {
     setMyModal(false);
   };
@@ -68,7 +61,7 @@ export default function Modal({
   return (
     <div>
       {loading ? (
-        "...로딩중"
+        '...로딩중'
       ) : (
         <ModalContainer>
           <div className="weatherModal">
@@ -79,17 +72,11 @@ export default function Modal({
                 alt="weather"
               />
             </div>
-            <div className="weatherList">
-              오늘의 날씨는 : {weather.weather[0].main}
-            </div>
+            <div className="weatherList">오늘의 날씨는 : {weather.weather[0].main}</div>
             <div className="weatherList">현재 위치는 : {weather.name}</div>
-            <div className="weatherList">
-              현재 기온은 : {weather.main.temp}도 입니다
-            </div>
+            <div className="weatherList">현재 기온은 : {weather.main.temp}도 입니다</div>
 
-            <div className="weatherList">
-              오늘의 최고 기온은 : {weather.main.temp_max}도 입니다
-            </div>
+            <div className="weatherList">오늘의 최고 기온은 : {weather.main.temp_max}도 입니다</div>
 
             <button onClick={handleModalCancel}>취소</button>
           </div>

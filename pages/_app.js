@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Header from "../src/component/Header";
+import React, { useState } from 'react';
+import Header from '../src/component/Header';
 
 function MyApp({ Component, pageProps }) {
   const [myModal, setMyModal] = useState(false);

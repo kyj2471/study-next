@@ -231,7 +231,7 @@ value:2,
 - 자 근데 위에서 한 내용은 기본 중요하지만 저렇겐 못쓴다. 예로 트위터라는 곳에서 리듀서를 사용한다면 redux에서 제공하는 combineReducers함수를 이용하여 아래와 같이 사용한다.
 
 ```js
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
 const sessionReducer =
   ((state = { loggedIn: false, user: null }),
@@ -240,7 +240,7 @@ const sessionReducer =
   });
 
 const timelineReducer =
-  ((state = { type: "home", statuses: [] }),
+  ((state = { type: 'home', statuses: [] }),
   (payload) => {
     //something
   });
@@ -252,7 +252,7 @@ const notificationReducer = (state = [], payload) => {
 export default combineReducers({
   session: sessionReducer,
   timeline: timelineReducer,
-  notification: notificationReducer,
+  notification: notificationReducer
 });
 ```
 
@@ -324,3 +324,59 @@ export default connect(
 ---
 
 [mapStateToProps]
+
+- 인수로 전달된 state는 전체를 의미한다는 것을 주의하자.
+
+```js
+{
+  value: 2;
+}
+```
+
+위의 카운트 예가
+
+```js
+<Counter value={2} />
+```
+
+가 됬으면 좋겠는데? 라고 생각해서 `state => ({value:state.value})`라고 하였다.
+기본적으로 필요한 것만 선별해서 props로 엮는다를 원칙으로 생각하자.
+
+[mapDispatchToProps]
+
+- Action creator에서 action을 만든다고 해도 그것으론 아무일 일어나지 않음
+- Reducer를 향해 통지를 할 수 있게 만들기 위해서 만들기 위해 만든 action을 dispatch라는 함수에 넘겨야한다.
+- 이렇게되면 모든 reducer가 실행된다. 그래서 reducer에 switch문을 사용해서 분기 짜른게 이 이유때문이다.
+- 또 component쪽에 하나하나 수동으로 dispatch하는 처리를 하지 않아도 되도록 여기서 action의 생성부터 dispatch 실행까지 한번에 이뤄질 수 있도록 함수를 정의해서 props에 넘겨주자.
+
+---
+
+# Velopert
+
+## Redux
+
+위의 것으로 리덕스에 대략적인 맥을 잡았다.
+제대로 이해하고 쓰자.
+
+### 리덕스는 세가지 규칙이 있다.
+
+1. 하나의 application 안에 하나의 스토어가 있다.
+
+- 하나 어플안에는 하나의 스토어만 만들어서 사용한다.
+- 사실 비추임. 여러개 스토어 만들고 싶다면 해도됨
+- 특정 업데이트 너무 자주 일어나거나 애플리케이션 특정 부분 완전히 분리 하고 싶다면 스토어 여러개 만들어도 됨 하지만 단점으로 개발 도구 활용은 못하게됨.
+
+2. 상태는 읽기 전용이다.
+
+- 기존의 상태를 건드리지 않음. 새로운 상태를 생성하여 업데이트 해줌. 나중에 개발자 도구를 활용해서 뒤로 돌릴수도 앞으로 돌릴수도 있음.
+- 리덕스에서 불변성을 유지해야 하는 이유는 내부적으로 데이터가 변경되는걸 감지하기 위해 shallow equality검사를 하기 때문임. 이를 통해서 객체 변화 감지 할 때 객체의 안쪽 까지 깊숙한 비교를 하는게 아니라 겉 한번 사악~ 핥는 비교를 하여 좋은 성능을 유지 할 수 있다.
+- immutable.js 사용할건데 모르면 찾아보셈
+
+3. 변화를 일으키는 함수, `Reducer`는 순수한 함수여야함.
+
+- 리듀서는 함수의 이전 상태, 액션 객체를 파라미터로받음
+- 이전상태 안건드리고 변화를 일으킨 새로운 객체를 만들어 반환.
+- 똑같은 파라미터로 호출된 리듀서 함수는 언제나 같은 결과값 반환 해야함.
+
+위의 세가지를 지켜야한다. 동일한 인풋이라면 동일한 아웃풋이 필요한 법 근데 일부 로직중 실행할 때 마다 다른 값을 주는경우가 있다. 내가 그렇게 했다. id값에 Date.now()같은 걸 사용하였다 아니면 네트워크에서 뭔갈 요청하던가. 이런 작업은 순수하지 않으니 리듀서 밖에서 처리해야한다.
+근데 진정 이런걸 하고싶냐? 그러면 리덕스 미들웨어 쓰면된다.

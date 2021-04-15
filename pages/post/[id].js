@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
-import Test from "../Test";
-import styled from "styled-components";
-import Link from "next/link";
+import { useRouter } from 'next/router';
+import Test from '../Test';
+import styled from 'styled-components';
+import Link from 'next/link';
 
 const ContainerBox = styled.div`
   display: flex;

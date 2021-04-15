@@ -1,6 +1,6 @@
-import { ADD_TODO, UPDATE_TODO, DELETE_TODO } from "./actions";
-import { todos } from "./states";
-import React, { useEffect } from "react";
+import { ADD_TODO, UPDATE_TODO, DELETE_TODO } from './actions';
+import { todos } from './states';
+import React, { useEffect } from 'react';
 
 export let reducer = (state = todos, action) => {
   let newTodos;
@@ -27,11 +27,13 @@ export let reducer = (state = todos, action) => {
         if (editTodo) {
           setInput(editTodo.title);
         } else {
-          setInput("");
+          setInput('');
         }
       }, [setInput, editTodo]);
 
-      newTodos = todos.map((todo) => (todo.id === action.payload.id ? { title, id, completed } : todo));
+      newTodos = todos.map((todo) =>
+        todo.id === action.payload.id ? { title, id, completed } : todo
+      );
       return newTodos;
   }
 

@@ -1,6 +1,6 @@
-import React, { memo, useCallback } from "react";
-import styled from "styled-components";
-import Link from "next/link";
+import React, { memo, useCallback } from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
 
 const TodoListItemFullWrapper = styled.div`
   margin-top: 50px;
@@ -26,7 +26,7 @@ const TodoListItemFullWrapper = styled.div`
     button {
       width: 50px;
       height: 35px;
-      font-family: "Roboto", sans-serif;
+      font-family: 'Roboto', sans-serif;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 2.5px;
@@ -84,7 +84,12 @@ const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
           <div className="todoListItem" key={todo.id}>
             <Link href={`/post/${todo.title}`}>
               <a>
-                <input type="text" value={todo.title} className={todo.completed ? "listItemFinish" : "listItem"} onChange={(e) => e.preventDefault()} />
+                <input
+                  type="text"
+                  value={todo.title}
+                  className={todo.completed ? 'listItemFinish' : 'listItem'}
+                  onChange={(e) => e.preventDefault()}
+                />
               </a>
             </Link>
 
