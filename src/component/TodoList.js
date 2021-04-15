@@ -84,19 +84,11 @@ const TodoList = memo(({ todos, setTodos, setEditTodo }) => {
           <div className="todoListItem" key={todo.id}>
             <Link href={`/post/${todo.title}`}>
               <a>
-                <input
-                  type="text"
-                  value={todo.title}
-                  className={todo.completed ? "listItemFinish" : "listItem"}
-                  onChange={(e) => e.preventDefault()}
-                />
+                <input type="text" value={todo.title} className={todo.completed ? "listItemFinish" : "listItem"} onChange={(e) => e.preventDefault()} />
               </a>
             </Link>
 
-            <button
-              className="completeBtn"
-              onClick={() => handleComplete(todo)}
-            >
+            <button className="completeBtn" onClick={() => handleComplete(todo)}>
               완료
             </button>
             <button className="editBtn" onClick={() => handleEdit(todo)}>

@@ -22,14 +22,7 @@ function Home() {
       <h1 className="titleOfApp">해야만 한다</h1>
       <h1 className="titleOfApp"></h1>
       <div>
-        <TodoForm
-          input={input}
-          setInput={setInput}
-          todos={todos}
-          setTodos={setTodos}
-          editTodo={editTodo}
-          setEditTodo={setEditTodo}
-        />
+        <TodoForm input={input} setInput={setInput} todos={todos} setTodos={setTodos} editTodo={editTodo} setEditTodo={setEditTodo} />
         <TodoList todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
       </div>
     </FullWrapperContent>
