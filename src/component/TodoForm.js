@@ -90,41 +90,6 @@
 
 // export default TodoForm;
 
-// import React, { useState } from 'react';
-// import { addTodo } from '../store/actions';
-// import { v1 as uuid } from 'uuid';
-// import { useDispatch } from 'react-redux';
-
-// const TodoForm = () => {
-//   let [name, setName] = useState('');
-//   let dispatch = useDispatch();
-
-//   const handleChange = (e) => {
-//     setName(e.target.value);
-//   };
-
-//   return (
-//     <div>
-//       <form>
-//         <input value={name} onChange={handleChange} type="text" />
-//         <button
-//           onClick={() => {
-//             dispatch(
-//               addTodo({
-//                 id: uuid(),
-//                 name: name
-//               })
-//             );
-//             setName('');
-//           }}>
-//           Add
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-// export default TodoForm;
-
 import React, { useState } from 'react';
 import { addTodo } from '../store/actions';
 import { v1 as uuid } from 'uuid';
