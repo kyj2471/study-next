@@ -52,10 +52,6 @@ import TodoList from '../src/component/TodoList';
 // `;
 
 function Home() {
-  // const [input, setInput] = useState('');
-  // const [todos, setTodos] = useState([]);
-  // const [editTodo, setEditTodo] = useState(null);
-
   return (
     <div>
       <h1>해야만 한다</h1>
