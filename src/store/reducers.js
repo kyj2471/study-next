@@ -5,9 +5,7 @@ export const reducer = (state = todos, action) => {
   let newTodos;
   switch (action.type) {
     case ADD_TODO:
-      newTodos = [...state];
-      newTodos.push(action.payload);
-      return newTodos;
+      return state.concat(action.payload);
     case DELETE_TODO:
       newTodos = [...state];
       newTodos = newTodos.filter((todo) => todo.id !== action.payload);
@@ -41,6 +39,3 @@ export const reducer = (state = todos, action) => {
   }
   return state;
 };
-
-var test = 1;
-test = 2;
