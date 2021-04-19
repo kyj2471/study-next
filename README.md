@@ -391,3 +391,14 @@ export default connect(
 - 이렇게 따로 모듈화 하는건 애플리케이션에 하나의 스토어만 있지만 예외 케이스가 있기때문. 우린 서버사이드 렌더링을 하니까 서버쪽에서도 각 요청이 처리 될 때마다 스토어를 생성해 줘야함.
 
 - actionCreator.js에서 스토어를 불러오고 또 각 모듈들에서 선언했던 액션 생성함수들을 불러와 store의 dispatch와 미리 바인딩 작업을 해줌
+
+[피드백/수정부분]
+분리 useDispatch
+push() 수정
+포문, 메서드 모듈화(리듀서, 액션)
+선언식 vs 표현식...
+내가쓴 액션 못씀..회사코드 참조해서 바꾸기
+바벨로 e.preventDefault~ 공부하기
+todoForm => ths에대해
+actionCreator
+http://guswnsxodlf.github.io/optimize-react-component-using-reselect =>reSelect
