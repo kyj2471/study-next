@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { addTodo } from '../store/actions/actions';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+// import { connect } from 'react-redux';
 
 const HeadTodoForm = styled.div`
   display: flex;
@@ -57,6 +58,13 @@ function TodoInput() {
     );
     setName('');
   };
+  // const handleSubmit = () => {
+  //   addTodo({
+  //     id: Date.now(),
+  //     name: name
+  //   });
+  //   setName('');
+  // };
 
   return (
     <HeadTodoForm>

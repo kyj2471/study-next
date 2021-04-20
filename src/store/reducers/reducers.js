@@ -20,7 +20,7 @@ export const reducer = (state = initialState, action) => {
     case UPDATE_TODO:
       newTodos = [...state];
       const index = newTodos.findIndex((todo) => todo.id === action.payload.id);
-      if (index !== -1) {
+      if (index) {
         newTodos[index] = action.payload;
         return newTodos;
       }
