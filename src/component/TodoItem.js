@@ -1,44 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteTodo, updateTodo, checkedTodo } from '../store/actions';
+import { deleteTodo, updateTodo, checkedTodo } from '../store/actions/actions';
 import styled from 'styled-components';
 import Link from 'next/link';
-const TodoItemFull = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 25px;
-
-  button {
-    width: 50px;
-    height: 35px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 2.5px;
-    font-weight: 500;
-    color: #000;
-    background-color: #fff;
-    border: none;
-    border-radius: 45px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease 0s;
-    cursor: pointer;
-    outline: none;
-    margin-left: 35px;
-  }
-
-  button:hover {
-    background-color: #2ee59d;
-    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-    color: #fff;
-    transform: translateY(-7px);
-  }
-
-  .doneTodo {
-    text-decoration: line-through;
-  }
-`;
 
 function TodoItem({ todo }) {
   const [IsEditTodo, setIsEditTodo] = useState(false);
@@ -59,7 +23,6 @@ function TodoItem({ todo }) {
   };
 
   const handleChange = (e) => {
-    console.log(e);
     setName(e.target.value);
   };
 
@@ -98,3 +61,40 @@ function TodoItem({ todo }) {
 }
 
 export default TodoItem;
+
+const TodoItemFull = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+
+  button {
+    width: 50px;
+    height: 35px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 500;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 45px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+    cursor: pointer;
+    outline: none;
+    margin-left: 35px;
+  }
+
+  button:hover {
+    background-color: #2ee59d;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    color: #fff;
+    transform: translateY(-7px);
+  }
+
+  .doneTodo {
+    text-decoration: line-through;
+  }
+`;

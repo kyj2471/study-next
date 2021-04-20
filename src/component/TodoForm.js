@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { addTodo } from '../store/actions';
+import { addTodo } from '../store/actions/actions';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 

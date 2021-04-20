@@ -1,7 +1,14 @@
-import { ADD_TODO, UPDATE_TODO, DELETE_TODO, CHECKED_TODO } from './actions';
-import { todos } from './states';
+import { ADD_TODO, UPDATE_TODO, DELETE_TODO, CHECKED_TODO } from '../actions/actions';
 
-export const reducer = (state = todos, action) => {
+const initialState = [
+  {
+    id: 0,
+    name: 'Redux',
+    checked: false
+  }
+];
+
+export const reducer = (state = initialState, action) => {
   let newTodos;
   switch (action.type) {
     case ADD_TODO:
@@ -12,26 +19,14 @@ export const reducer = (state = todos, action) => {
       return newTodos;
     case UPDATE_TODO:
       newTodos = [...state];
-      let index = -1;
-      for (let i = 0; i < newTodos.length; i++) {
-        index++;
-        if (newTodos[i].id == action.payload.id) {
-          break;
-        }
-      }
+      const index = newTodos.findIndex((todo) => todo.id === action.payload.id);
       if (index !== -1) {
         newTodos[index] = action.payload;
         return newTodos;
       }
     case CHECKED_TODO:
       newTodos = [...state];
-      let findCheckedIndex = -1;
-      for (let i = 0; i < newTodos.length; i++) {
-        findCheckedIndex++;
-        if (newTodos[i].id == action.payload.id) {
-          break;
-        }
-      }
+      const findCheckedIndex = newTodos.findIndex((todo) => todo.id === action.payload.id);
       if (findCheckedIndex !== -1) {
         newTodos[findCheckedIndex].checked = !newTodos[findCheckedIndex].checked;
         return newTodos;
