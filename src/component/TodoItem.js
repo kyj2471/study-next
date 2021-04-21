@@ -1,67 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { deleteTodo, updateTodo, checkedTodo } from '../store/actions/actions';
 import styled from 'styled-components';
-import Link from 'next/link';
-
-function TodoItem({ todo }) {
-  const [IsEditTodo, setIsEditTodo] = useState(false);
-  const [name, setName] = useState(todo.name);
-  const dispatch = useDispatch();
-
-  const handleUpdate = () => {
-    dispatch(
-      updateTodo({
-        ...todo,
-        name: name
-      })
-    );
-    if (IsEditTodo) {
-      setName(todo.name);
-    }
-    setIsEditTodo(!IsEditTodo);
-  };
-
-  const handleChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleDelete = () => {
-    dispatch(deleteTodo(todo.id));
-  };
-
-  const handleChecked = () => {
-    dispatch(
-      checkedTodo({
-        ...todo
-      })
-    );
-  };
-
-  const todoClassName = todo.checked ? 'doneTodo' : 'notDoneTodo';
-
-  return (
-    <TodoItemFull>
-      {/* <Link href={`/post/${todo.name}`}> */}
-      <div className="listItems">
-        {IsEditTodo ? (
-          <input type="text" value={name} onChange={handleChange} />
-        ) : (
-          <div className={todoClassName}>{todo.name}</div>
-        )}
-      </div>
-      {/* </Link> */}
-      <div>
-        <button onClick={handleUpdate}>{IsEditTodo ? '변경' : '수정'}</button>
-        <button onClick={handleDelete}>삭제</button>
-        <button onClick={handleChecked}>완료</button>
-      </div>
-    </TodoItemFull>
-  );
-}
-
-export default TodoItem;
-
+import { connect } from 'react-redux';
 const TodoItemFull = styled.div`
   display: flex;
   justify-content: space-between;
@@ -96,5 +36,73 @@ const TodoItemFull = styled.div`
 
   .doneTodo {
     text-decoration: line-through;
+    color: red;
+  }
+  .notDoneTodo {
+    color: blue;
   }
 `;
+
+function TodoItem({ todo, deleteTodo, updateTodo, checkedTodo, name }) {
+  const [IsEditTodo, setIsEditTodo] = useState(false);
+  const [input, setInput] = useState(todo.name);
+
+  const handleUpdate = () => {
+    updateTodo({
+      ...todo,
+      name: input
+    });
+    if (IsEditTodo) {
+      setInput(todo.name);
+    }
+    setIsEditTodo(!IsEditTodo);
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setInput(e.target.value);
+  };
+
+  const handleDelete = () => {
+    deleteTodo(todo.id);
+  };
+
+  const handleChecked = () => {
+    checkedTodo(todo);
+    console.log(todo);
+  };
+
+  const todoClassName = todo.checked ? 'doneTodo' : 'notDoneTodo';
+
+  return (
+    <TodoItemFull>
+      <div className="listItems">
+        {IsEditTodo ? (
+          <input type="text" value={name} onChange={handleChange} />
+        ) : (
+          <div className={todoClassName}>{todo.name}</div>
+        )}
+      </div>
+      <div>
+        <button onClick={handleUpdate}>{IsEditTodo ? '변경' : '수정'}</button>
+        <button onClick={handleDelete}>삭제</button>
+        <button onClick={handleChecked}>완료</button>
+      </div>
+    </TodoItemFull>
+  );
+}
+
+const mapStateToProps = ({ name, updateTodo, deleteTodo, checkedTodo }) => ({
+  name,
+  updateTodo,
+  deleteTodo,
+  checkedTodo
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  deleteTodo: (todoId) => dispatch(deleteTodo(todoId)),
+  checkedTodo: (todo) => dispatch(checkedTodo(todo)),
+  updateTodo: (todo) => dispatch(updateTodo(todo))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoItem);

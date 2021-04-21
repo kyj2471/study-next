@@ -12,6 +12,7 @@ export const reducer = (state = initialState, action) => {
   let newTodos;
   switch (action.type) {
     case ADD_TODO:
+      newTodos = [...state];
       return state.concat(action.payload);
     case DELETE_TODO:
       newTodos = [...state];
@@ -20,15 +21,16 @@ export const reducer = (state = initialState, action) => {
     case UPDATE_TODO:
       newTodos = [...state];
       const index = newTodos.findIndex((todo) => todo.id === action.payload.id);
-      if (index) {
+      if (index !== -1) {
         newTodos[index] = action.payload;
         return newTodos;
       }
     case CHECKED_TODO:
       newTodos = [...state];
       const findCheckedIndex = newTodos.findIndex((todo) => todo.id === action.payload.id);
-      if (findCheckedIndex !== -1) {
+      if (findCheckedIndex != -1) {
         newTodos[findCheckedIndex].checked = !newTodos[findCheckedIndex].checked;
+        console.log(newTodos);
         return newTodos;
       }
   }

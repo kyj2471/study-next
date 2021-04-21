@@ -393,11 +393,11 @@ export default connect(
 - actionCreator.js에서 스토어를 불러오고 또 각 모듈들에서 선언했던 액션 생성함수들을 불러와 store의 dispatch와 미리 바인딩 작업을 해줌
 
 [피드백/수정부분]
-useDispatch => connect
-액션,리듀서 모듈화 ////////////ok
-push() 수정 //////////////ok
-포문 수정... /////////////////ok
-내가쓴 액션 못씀..회사코드 참조해서 바꾸기//////////////ok
+useDispatch => connect ///////////ok....
+action, reducer 모듈화 ////////////ok
+push() 수정 => concat or object.assign //////////////ok
+reducer for문 돌아서 지저분한거 싹다 수정 수정... /////////////////ok
+내가쓴 액션 못씀..깔끔하게 createAction써서 바꾸기//////////////ok
 
 [피드백이후공부해야하는것]
 바벨로 e.preventDefault~ 공부하기

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { addTodo } from '../store/actions/actions';
-import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 
 const HeadTodoForm = styled.div`
   display: flex;
@@ -41,35 +40,25 @@ const HeadTodoForm = styled.div`
   }
 `;
 
-function TodoInput() {
-  const [name, setName] = useState('');
-  const dispatch = useDispatch();
+function TodoForm({ addTodo, name }) {
+  const [input, setInput] = useState('');
 
   const handleChange = (e) => {
-    setName(e.target.value);
+    setInput(e.target.value);
   };
 
   const handleSubmit = () => {
-    dispatch(
-      addTodo({
-        id: Date.now(),
-        name: name
-      })
-    );
-    setName('');
+    addTodo({
+      id: Date.now(),
+      name: input
+    });
+    setInput('');
   };
-  // const handleSubmit = () => {
-  //   addTodo({
-  //     id: Date.now(),
-  //     name: name
-  //   });
-  //   setName('');
-  // };
 
   return (
     <HeadTodoForm>
       <form onSubmit={handleSubmit}>
-        <input className="todoInput" value={name} onChange={handleChange} type="text" required />
+        <input className="todoInput" value={input} onChange={handleChange} type="text" required />
         <button type="submit" className="todoButton" onClick={handleSubmit}>
           추가
         </button>
@@ -78,4 +67,13 @@ function TodoInput() {
   );
 }
 
-export default TodoInput;
+const mapStateToProps = ({ name, addTodo }) => ({
+  name,
+  addTodo
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addTodo: (todo) => dispatch(addTodo(todo))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
