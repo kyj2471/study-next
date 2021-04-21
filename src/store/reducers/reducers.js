@@ -30,7 +30,6 @@ export const reducer = (state = initialState, action) => {
       const findCheckedIndex = newTodos.findIndex((todo) => todo.id === action.payload.id);
       if (findCheckedIndex != -1) {
         newTodos[findCheckedIndex].checked = !newTodos[findCheckedIndex].checked;
-        console.log(newTodos);
         return newTodos;
       }
   }

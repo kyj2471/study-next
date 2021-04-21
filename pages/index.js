@@ -18,10 +18,10 @@ const FullWrapperContent = styled.div`
 `;
 
 function Home() {
-  const [myModal, setMyModal] = useState(false);
+  // const [myModal, setMyModal] = useState(false);
   return (
     <FullWrapperContent>
-      <Header myModal={myModal} setMyModal={setMyModal} />
+      {/* <Header myModal={myModal} setMyModal={setMyModal} /> */}
       <h1 className="titleOfApp">해야만 한다</h1>
       <div>
         <TodoForm />

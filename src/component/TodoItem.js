@@ -46,6 +46,7 @@ const TodoItemFull = styled.div`
 function TodoItem({ todo, deleteTodo, updateTodo, checkedTodo, name }) {
   const [IsEditTodo, setIsEditTodo] = useState(false);
   const [input, setInput] = useState(todo.name);
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleUpdate = () => {
     updateTodo({
@@ -68,9 +69,18 @@ function TodoItem({ todo, deleteTodo, updateTodo, checkedTodo, name }) {
   };
 
   const handleChecked = () => {
-    checkedTodo(todo);
-    console.log(todo);
+    checkedTodo({ ...todo });
+    if (isChecked) {
+      setIsChecked(todo.checked);
+    }
+    setIsChecked(!isChecked);
   };
+
+  // const handleChecked = () => {
+  //   checkedTodo(todo);
+  //   console.log(todo);
+  //   console.log(todo.checked);
+  // };
 
   const todoClassName = todo.checked ? 'doneTodo' : 'notDoneTodo';
 
@@ -92,15 +102,14 @@ function TodoItem({ todo, deleteTodo, updateTodo, checkedTodo, name }) {
   );
 }
 
-const mapStateToProps = ({ name, updateTodo, deleteTodo, checkedTodo }) => ({
-  name,
+const mapStateToProps = ({ updateTodo, deleteTodo, checkedTodo }) => ({
   updateTodo,
   deleteTodo,
   checkedTodo
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteTodo: (todoId) => dispatch(deleteTodo(todoId)),
+  deleteTodo: (todo) => dispatch(deleteTodo(todo)),
   checkedTodo: (todo) => dispatch(checkedTodo(todo)),
   updateTodo: (todo) => dispatch(updateTodo(todo))
 });

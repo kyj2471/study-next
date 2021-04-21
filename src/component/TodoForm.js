@@ -40,17 +40,19 @@ const HeadTodoForm = styled.div`
   }
 `;
 
-function TodoForm({ addTodo, name }) {
+function TodoForm({ addTodo, name, checked }) {
   const [input, setInput] = useState('');
 
   const handleChange = (e) => {
+    e.preventDefault();
     setInput(e.target.value);
   };
 
   const handleSubmit = () => {
     addTodo({
       id: Date.now(),
-      name: input
+      name: input,
+      checked: false
     });
     setInput('');
   };
@@ -67,9 +69,10 @@ function TodoForm({ addTodo, name }) {
   );
 }
 
-const mapStateToProps = ({ name, addTodo }) => ({
+const mapStateToProps = ({ name, addTodo, checked }) => ({
   name,
-  addTodo
+  addTodo,
+  checked
 });
 
 const mapDispatchToProps = (dispatch) => ({
