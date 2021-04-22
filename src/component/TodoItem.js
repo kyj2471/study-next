@@ -66,9 +66,13 @@ function TodoItem({ todo, deleteTodo, updateTodo, checkedTodo, name }) {
     deleteTodo(todo.id);
   };
 
+  //이거 다신하지말도록
   const handleChecked = () => {
     checkedTodo({ ...todo });
-    setIsChecked(todo.checked);
+    if (isChecked) {
+      setIsChecked(todo.checked);
+    }
+    setIsChecked(!isChecked);
   };
 
   const todoClassName = todo.checked ? 'doneTodo' : 'notDoneTodo';

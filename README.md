@@ -1,48 +1,3 @@
-import { combineReducers, createStore } from 'redux';
-import { reducer } from './reducers/reducers';
-
-const rootReducer = combineReducers({
-reducer
-});
-
-const store = createStore(rootReducer);
-console.log(store.getState());
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
 # Next.js
 
 ### 공부하다 알게된 장점?
@@ -124,6 +79,10 @@ ssg => staticprops,path ssr => serversideprops
 - [id].js에서는 각 아이디별로 되있는 api를 받아와서 상세페이지로 넘겨준다
 - 그걸 아이템 컴퍼넌트에서 받아서 화면 구현한다
 
+---
+
+### 피드백
+
 [review받은후Fix할것]
 
 - boolean값을 state값에 둘때 협업때 가독성을 위해서 이름 바꾸기
@@ -149,10 +108,12 @@ ssg => staticprops,path ssr => serversideprops
 
 - 기본적으로 상태에관한건 여기서 집중관리됨.
 - 커다란 JSON의 결정체라고 생각하자
+
+```js
   {
   value:0,
   }
-  이런식으로 저장된다. 그런데 규모가 크다면
+  //이런식으로 저장된다. 그런데 규모가 크다면
   {
   //세션과 관련된 것들
   sessoin:{
@@ -175,6 +136,7 @@ ssg => staticprops,path ssr => serversideprops
   //알림과 관련
   notification:[],
   }
+```
 
 이런식으로 카테고리별로 나눠서 하게된다.
 
@@ -187,18 +149,23 @@ ssg => staticprops,path ssr => serversideprops
 [Action]
 
 - 어떠한 포맷을 가지고 있는 녀석일까?
+
+```js
   {
   type: "액션의 종류를 한번에 식별할 수 있는 문자열 혹은 심볼",
   payload: "액션의 실행에 필요한 데이터",
   }
+```
+
 - 느낌이 온다? 타입이야 타입일것이니 넘어가고 payload...? 액션의 실행에 필요한 데이터?
   이걸 번역기에 넣으면 뜻이 유효탑재량이다. 느낌알겠으니 계속가보자
 
+```js
 {
 type:"@@myapp/ADD_VALUE",
 payload:2,
-
 }
+```
 
 - 위의 JSON 객체가 뭘 의미할까? 카운터 값을 2배 늘릴때 대충 저런식일거란 느낌이 온다.
 - @@myapp이란 Prefix가 오는 건 다른 사람이 쓴 코드와의 충돌을 피하기 위함이다.
@@ -362,7 +329,7 @@ export default connect(
 
 ---
 
-# Velopert
+# Velopert보고 다시 리덕스
 
 ## Redux
 
@@ -406,22 +373,16 @@ export default connect(
 ---
 
 [피드백/수정할것]
-useDispatch => connect ///////////ok ==>connect내부파보자.
-action, reducer 따로 ////////////ok
-push() 수정 => concat or object.assign //////////////ok
-reducer for문 돌아서 지저분한거 싹다 수정 수정... /////////////////ok
-내가쓴 액션 못씀..깔끔하게 createAction써서 바꾸기//////////////ok
-
-[react-redux]
-
-- 리덕스는 스토어 호출할떄 길어짐 this.props.....길어짐...
-  그걸 provider 컴퍼넌트 감싸주고 한방에 커넥트써서.........................
+useDispatch => 이거 좋긴함 근데 이거 훅스임 그래서 클래스형에 못씀 이렇게 좋은거 다 쓸 수있게 해주었더라면 좋았을텐데. 근데 connect도 장점이 많다 아래에 자세히 적어놓았다.
+action, reducer => 따로 function으로 빼서 리듀서 리팩토링하고 액션은 깔끔하게 바꾸었다.
+push() 수정 => concat or object.assign => 이게 리팩토링으로 해야 하는게 부끄러운거다 리덕스 공부했다는 놈이
+reducer for문 돌아서 지저분한거 싹다 수정 수정...=> 지저분? 이런식으로 말하지마라 엔지니어처럼 말해야한다. 아무튼 깔끔하게 바꾸긴했다.
+내가쓴 액션 못씀..깔끔하게 createAction써서 바꾸기 => createAction을 사용할때 오는 장점이 있음 아래적어놓기도 했고 액션 코드만 봐도 알 수있다.
 
 [피드백이후공부해야하는것]
-선언식 vs 표현식.../////ok
-바벨로 e.preventDefault~//////fail...
-http://guswnsxodlf.github.io/optimize-react-component-using-reselect =>reSelect ////ok
-리덕스-사가//////...
+선언식 vs 표현식... => 호이스팅에관한 이슈가 대부분이다. 바로 아래 짧게나마 달아놓았다.
+Reselect => 짧게 이야기 해주셨는데 이거 최적화 관련된거다. 아래에 간단한설명 해놈 + 링크에 잘나와있음 ㅎ
+바벨로 e.preventDefault~ => 이건 못하겠다...왜 안나오지 구글에...?
 
 [우아한테크세미나]
 자바지기 아저씨 연설듣고...
@@ -430,8 +391,14 @@ http://guswnsxodlf.github.io/optimize-react-component-using-reselect =>reSelect 
 나만의 코드 스타일을 위한 목표를 정하고 그렇게 하기로했으면 그렇게 하기
 하루종일 코드 생각하기...
 주변 환경 영향을 받지 않고 각자 할 공부 하고 꾸준한 연습만이 개발자로 살아남는것
-여자친구없고 결혼하지 않은 개발자는 축복받은거다 그만큼 아무도 날 못건드리거든...(...나...)
-확인...
+여자친구없고 결혼하지 않은 개발자는 축복받은거다...?
+확인...ㅋ
+
+[피드백]
+이번에 딱히 피드백을 받은건 없다.
+깃헙에 보면 커넥트 관련해서 코드 깊이가 깊게 들어가는게 있는데 그거보고 커넥트 다시보자.
+아...쓸데없는 if문 엄청 썼다... 이건 실수가 아니고 내실력인것같다 ㅎ 이제 안그래야지^^;;
+진짜 코드 짤때 van의 코드 보면 주석으로 깔끔하게 해놓으셨다 ㅎ 그거 보고 따라해야지 ㅎ
 
 ---
 
@@ -448,10 +415,24 @@ http://guswnsxodlf.github.io/optimize-react-component-using-reselect =>reSelect 
 2. 콜백으로 사용.(다른 함수의 인자로 넘길 수 있음)
    콜백함수는 알다시피 다른 함수의 인자로 전달된 함수를 의미한다.
    클로저...개념이 조금 어려운데.
-   자바스크립트에서 클로저는 부모가 반환한 후에도 부모 범위에서 변수에 대한 참조를 유지하는 모든 함수이다...
+   자바스크립트에서 클로저는 부모가 반환한 후에도 부모 범위에서 변수에 대한 참조를 유지하는 모든 함수이다 라고 일단 이해하자.
 
 결론은??? => 함수 표현식이 선언식에 비해 가지는 장점이 많다. 그런데 결국 이러한 차이점을 알고 일관된 코딩 컨벤션으로 코드를 작성하는게 중요!.
 AirBnb JS style사용하는 우리회사도 함수 선언식 보다는 함수 표현식을 지향한다고 알고있다...? 아닌가?
+
+[Reselect...React/redux최적화]
+리액트랑 리덕스 같이 쓰면 관심사를 분리할 수 있는 좋은 조합이다.
+React에서 가장 오래걸리는 작업은 렌더링 싸이클이다.
+컴퍼넌트 state,props가 변경되기 시작하면 렌더링 싸이클이 발생한다.
+
+reselect는 첫번쨰 파라미터 배열안에 있는 함수들이 반환하는 값이 이전과 같으면 마지막 파라미터로 준 함수를 실행하지 않는다.
+개발 할때 이런 최적화를 하면 어플리케이션이 복잡해도 쓸만한 성능 보장됨.
+자세한 내용은 ? =>
+http://guswnsxodlf.github.io/optimize-react-component-using-reselect
+
+---
+
+### 다시 리덕스 관련
 
 [createAction]
 얘를 쓰면 3가지를 파라미터로 가져옴.
@@ -473,14 +454,19 @@ HOC의 용도는 => 컴퍼넌트 특정 함수로 감싸서 특정 값 또는 �
 
 커넥트 함수는 리덕스 스토어 안에 있는 state를 프롭으로 넣어줄수도 있고 액션 디스패치하는 함수를 프롭으로 넣어줄 수도 있음
 
+[HOC]
+
+login, debugging 할때 많이 씀
+자세한 내용은? ==> https://velog.io/@hwang-eunji/React-%EA%B3%A0%EC%B0%A8-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-HOC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
+
 [connect-VS-useDispatch,useSelector]
-사실 커넥트의 장점...잘 모르겠다...HOC...? 이거 다 훅스에있는 유즈 디스패치나 유즈 셀렉터가 해준다.
-connect가 하는 일을 useSelector가 state를 가져다 쓸 수 있게 해주고 useDispatch를 사용해서 프롭스에 action dispatch를 사용할 필요없이 액션 객체를 dispatch할수 있다...
-커넥트를 사용해 불필요한 렌더링관련한 장점역시도 훅스를 사용해도 다 할 수 있다...
+사실 connect의 장점...잘 모르겠다...HOC...? 이거 다 훅스에있는 유즈 디스패치나 유즈 셀렉터가 해준다.
+connect가 하는 일을 useSelector가 state를 가져다 쓸 수 있게 해주고 useDispatch를 사용해서 props에 action dispatch를 사용할 필요없이 액션 객체를 dispatch할수 있다.
+커넥트를 사용해 불필요한 rendering관련한 장점 역시도 Hooks를 사용해도 다 할 수 있다.
 하지만 지금 당장은 후자보다는 connect를 사용하는게 맞다고 생각한다.
 이유는 아직까지 수많은 리액트 관련 코드들은 클래스형으로 쓰여져 있는 경우가 많다.
-커넥트는 둘다 사용가능하지만 후자는 클래스형에서는 사용을 하지 못한다.
-결론은 지금당장은 커넥트를 쓰지만 개인적으로 프로젝트할 때는 유즈 디스패치랑 유즈 셀렉터를 사용하자...언젠간 쟤들로 다 바뀔것 같다는 느낌이 든다. ㅎ
+커넥트는 둘다 사용가능하지만 후자(useDispatch, useSelector) 는 클래스형에서는 사용을 하지 못한다.
+결론은 지금당장은 connect를 쓰지만 개인적으로 프로젝트할 때는 useDispatch, useSelector를 사용하자. 언젠간 쟤들로 다 바뀔것 같다는 느낌이 든다.
 
 [mapStateToProps]
 이거 그냥 리덕스 스토어 state조회해서 어떤걸 프롭을 넣어줄지 정의하는 거임.
@@ -494,15 +480,9 @@ connect가 하는 일을 useSelector가 state를 가져다 쓸 수 있게 해주
 bindActionCreators를 사용하는곳은 리덕스를 상관하지 않는 컴퍼넌트로 액션 생산자를 넘기는데 디스패치나 리덕스 스토어는 넘기기 싫을때 씀
 인자로는 actionCreators, dispatch사용함
 
-[Reselect...React/redux최적화]
-리액트랑 리덕스 같이 쓰면 관심사를 분리할 수 있는 좋은 조합이다.
-React에서 가장 오래걸리는 작업은 렌더링 싸이클이다.
-컴퍼넌트 state,props가 변경되기 시작하면 렌더링 싸이클이 발생한다.
-
-reselect는 첫번쨰 파라미터 배열안에 있는 함수들이 반환하는 값이 이전과 같으면 마지막 파라미터로 준 함수를 실행하지 않는다.
-개발 할때 이런 최적화를 하면 어플리케이션이 복잡해도 쓸만한 성능 보장됨.
-
 ---
+
+### redux-saga시작전 간단하게 훑기
 
 [가볍게-REDUX-SAGA]
 React X Redux만으로는 아직 불편합니다.
@@ -532,6 +512,10 @@ Redux - SAGA는 제너레이터 함수라 비동기 처리를 간단히 다룰 �
 
 ---
 
+# REDUX - SAGA
+
+## 우선 가볍게...
+
 [REDUX-SAGA]
 redux-thunk다음으로 많이 사용됨.
 사가는 성크가 해결 못한 다양한 작업을 처리 가능하다.
@@ -542,14 +526,95 @@ redux-thunk다음으로 많이 사용됨.
 4. API 요청이 실패 할 때 재요청 할 수 있는 작업을 할 수 있다.
 
 [Generator]
-generator는 함수를 작성할 때 함수를 특정 구간에 멈춰놓을 수도 있고, 원할 때 다시 돌아가게 할 수도 있다.
-또한 그 결과값을 여러번 반환 할 수도 있다.
+들어는 봤던 generator 이녀석은 특정 구간에 멈춰놓을 수도 원할 때 다시 돌아가게 할 수도 있습니다.
+그리고 결과값을 여러번 반환 할 수도 있다.
+generator 번역기 쳐보면 발전기라 나온다.
+감이 안온다 그냥 코드 보자.
 
----
+```js
+function weirdFunction() {
+  return 1;
+  return 2;
+  return 3;
+  return 4;
+  return 5;
+}
+```
 
-[HOC]
+물론 리턴 저렇게 여러번 반환하는건 불가능함. 이 함수는 무조건 1을 return할거다.
+하지만 generator함수를 사용하면 값을 순차적으로 반환하는게 가능함.
+심지어 중간에 멈춰놓고 나중에 이어가는것 마저도 가능함.
 
-login체크
-디버깅 체크
+제너레이터 한번 돌려보자.
 
-==> https://velog.io/@hwang-eunji/React-%EA%B3%A0%EC%B0%A8-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-HOC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0
+```js
+function* generatorFunction() {
+  console.log('1');
+  yield 1;
+
+  console.log('2');
+  yield 2;
+
+  console.log('3');
+  yield 3;
+  return 4;
+}
+
+const generator = generatorFunction();
+generator.next(); //{ value: 1, done: false }
+generator.next(); //{ value: 2, done: false }
+generator.next(); //{ value: 3, done: false }
+generator.next(); //{ value: 4, done: true }
+generator.next(); //{ value: undefined, done: true }
+generator.next(); //{ value: undefined, done: true }
+```
+
+- yield??? => 양보하다 라는 뜻을 가지고 있다.(왜 이렇게 지었지 이름?)
+- 일단 제너레이터 함수를 만드려면 function\* 라는 키워드를 써야한다.
+- 제너레이터 함수를 호출하면 위에처럼 객체를 뱉어낸다. 이걸 제너레이터 라고한다.
+- 제너레이터 함수는 호출한다고 해당 함수가 시작되지 않는다.
+- generator.next()라는 것을 호출해야지만 코드가 실행된다.
+- yield값을 한번 반환하고 잠시 코드 흐름이 멈춘다.
+
+제너레이터 하나더 해보자 신기하다 ㅎㅎ
+next() 호출할 때 인자를 전달해서 이를 제너레이터 함수 내부에 사용할수도있다.
+
+```js
+function* sumGenerator() {
+  console.log('start');
+  let a = yield;
+
+  console.log('value : a');
+  let b = yield;
+
+  console.log('value : b');
+  yield a + b;
+}
+
+const generator = sumGenerator();
+generator.next(); //{ value: undefined, done: false }
+generator.next(7); //{ value: undefined, done: false }
+generator.next(2); //{ value: 9, done: false }
+```
+
+[Generator액션모니터링]
+REDUX-SAGA에서는 액션을 모니터링 할 수 있다.
+역시 뭔말인지 모르겠다 그냥 코드보자
+
+```js
+function* watchGenerator() {
+  console.log('monitoring start');
+  while (true) {
+    const action = yield;
+    if (action.type === 'hello') console.log('hi bro');
+    if (action.type === 'bye') console.log('good bye');
+  }
+}
+const watch = watchGenerator();
+watch.next();
+watch.next({ type: 'bye' });
+watch.next({ type: 'hello' });
+```
+
+결과는 타입값에 따라 콘솔이 찍힌다. 리덕스사가에서 어떤 원리로 인해 액션을 모니터링하는지 알겠다.
+결국 특정 액션을 발생할 때 우리가 원하는 자바스크립트 코드를 실행 시켜준다.
