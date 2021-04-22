@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import TodoForm from '../src/component/TodoForm';
 import TodoList from '../src/component/TodoList';
 import styled from 'styled-components';
-import Header from '../src/component/Header';
+// import Header from '../src/component/Header';
 
 const FullWrapperContent = styled.div`
   max-width: 450px;

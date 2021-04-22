@@ -1,3 +1,13 @@
+import { combineReducers, createStore } from 'redux';
+import { reducer } from './reducers/reducers';
+
+const rootReducer = combineReducers({
+reducer
+});
+
+const store = createStore(rootReducer);
+console.log(store.getState());
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -187,6 +197,7 @@ ssg => staticprops,path ssr => serversideprops
 {
 type:"@@myapp/ADD_VALUE",
 payload:2,
+
 }
 
 - 위의 JSON 객체가 뭘 의미할까? 카운터 값을 2배 늘릴때 대충 저런식일거란 느낌이 온다.
@@ -392,15 +403,153 @@ export default connect(
 
 - actionCreator.js에서 스토어를 불러오고 또 각 모듈들에서 선언했던 액션 생성함수들을 불러와 store의 dispatch와 미리 바인딩 작업을 해줌
 
+---
+
 [피드백/수정할것]
-useDispatch => connect ///////////ok
-action, reducer 모듈화 ////////////ok
+useDispatch => connect ///////////ok ==>connect내부파보자.
+action, reducer 따로 ////////////ok
 push() 수정 => concat or object.assign //////////////ok
 reducer for문 돌아서 지저분한거 싹다 수정 수정... /////////////////ok
 내가쓴 액션 못씀..깔끔하게 createAction써서 바꾸기//////////////ok
 
+[react-redux]
+
+- 리덕스는 스토어 호출할떄 길어짐 this.props.....길어짐...
+  그걸 provider 컴퍼넌트 감싸주고 한방에 커넥트써서.........................
+
 [피드백이후공부해야하는것]
-바벨로 e.preventDefault~ 공부하기
-todoForm => this에대해
-http://guswnsxodlf.github.io/optimize-react-component-using-reselect =>reSelect
-선언식 vs 표현식...
+선언식 vs 표현식.../////ok
+바벨로 e.preventDefault~//////fail...
+http://guswnsxodlf.github.io/optimize-react-component-using-reselect =>reSelect ////ok
+리덕스-사가//////...
+
+[우아한테크세미나]
+자바지기 아저씨 연설듣고...
+인덴트 2이상 X, 하나의 함수는 하나의 일만하게...등등
+좋은 코드는 저렇게 되있다 이런것 보다도 주변에 필요없는 행동 과감히 잘라내고 시간 확보하기.
+나만의 코드 스타일을 위한 목표를 정하고 그렇게 하기로했으면 그렇게 하기
+하루종일 코드 생각하기...
+주변 환경 영향을 받지 않고 각자 할 공부 하고 꾸준한 연습만이 개발자로 살아남는것
+여자친구없고 결혼하지 않은 개발자는 축복받은거다 그만큼 아무도 날 못건드리거든...(...나...)
+확인...
+
+---
+
+[함수선언식vs함수표현식]
+함수 선언식은 호이스팅의 영향을 받는데 함수 표현식은 호이스팅 영향을 받지 않는다.
+그래서 함수 선언식을 사용하면 자바스크립트 특징인 호이스팅에 따라 브라우저가 자바스크립트를 해석할때 위로 끌려올라감.
+호이스팅 잘 모른다? 그냥 함수와 변수를 코드 상단에 쓰면 호이스팅에 의한 스코프 꼬임문제는 방지할 수 있다.
+
+[함수표현식]
+근데 뭔차일까...
+함수표현식의 장점은 뭘까?
+
+1. 클로져로 사용.
+2. 콜백으로 사용.(다른 함수의 인자로 넘길 수 있음)
+   콜백함수는 알다시피 다른 함수의 인자로 전달된 함수를 의미한다.
+   클로저...개념이 조금 어려운데.
+   자바스크립트에서 클로저는 부모가 반환한 후에도 부모 범위에서 변수에 대한 참조를 유지하는 모든 함수이다...
+
+결론은??? => 함수 표현식이 선언식에 비해 가지는 장점이 많다. 그런데 결국 이러한 차이점을 알고 일관된 코딩 컨벤션으로 코드를 작성하는게 중요!.
+AirBnb JS style사용하는 우리회사도 함수 선언식 보다는 함수 표현식을 지향한다고 알고있다...? 아닌가?
+
+[createAction]
+얘를 쓰면 3가지를 파라미터로 가져옴.
+
+1. 액션이름
+2. payloadCreator
+3. metaCreator
+
+[connect]
+커넥트 함수는 컨테이너 컴포넌트를 만드는 또다른 방법임.
+사실 useSelector / useDispatch가 편하기 때문임.
+훅스에서만 가능한거임 클래스형에서는 못씀...ㅠ.ㅠ
+
+커넥트는 HOC임...HOC는 higher-order-component임.
+이거는 리액트 컴퍼넌트 개발하는 하나의 패턴으로 컴포넌트 로직을 재활용 할 때 유용한 패턴임.
+특정 함수 또는 값을 프롭으로 받아와서 사용하고 싶을때 사용함.
+훅전에는 HOC패턴 많이 씀 근데 훅이후는 잘 안씀. 훅으로 대체 가능하기 때문임.
+HOC의 용도는 => 컴퍼넌트 특정 함수로 감싸서 특정 값 또는 함수를 프롭으로 받아와서 사용 할 수 있게 해주는 패턴 이라는 것만 알아두자.
+
+커넥트 함수는 리덕스 스토어 안에 있는 state를 프롭으로 넣어줄수도 있고 액션 디스패치하는 함수를 프롭으로 넣어줄 수도 있음
+
+[connect-VS-useDispatch,useSelector]
+사실 커넥트의 장점...잘 모르겠다...HOC...? 이거 다 훅스에있는 유즈 디스패치나 유즈 셀렉터가 해준다.
+connect가 하는 일을 useSelector가 state를 가져다 쓸 수 있게 해주고 useDispatch를 사용해서 프롭스에 action dispatch를 사용할 필요없이 액션 객체를 dispatch할수 있다...
+커넥트를 사용해 불필요한 렌더링관련한 장점역시도 훅스를 사용해도 다 할 수 있다...
+하지만 지금 당장은 후자보다는 connect를 사용하는게 맞다고 생각한다.
+이유는 아직까지 수많은 리액트 관련 코드들은 클래스형으로 쓰여져 있는 경우가 많다.
+커넥트는 둘다 사용가능하지만 후자는 클래스형에서는 사용을 하지 못한다.
+결론은 지금당장은 커넥트를 쓰지만 개인적으로 프로젝트할 때는 유즈 디스패치랑 유즈 셀렉터를 사용하자...언젠간 쟤들로 다 바뀔것 같다는 느낌이 든다. ㅎ
+
+[mapStateToProps]
+이거 그냥 리덕스 스토어 state조회해서 어떤걸 프롭을 넣어줄지 정의하는 거임.
+
+[mapDispatchProps]
+이거는 컴퍼넌트에 프롭스로 넣어줄 액션을 디스패치 하는 함수들에 관련된 함수임.
+
+[bindActionCreators]
+값이 액션 생산자인 객체를 받아서 같은 키를 가지지만 각각의 생산자들을 디스패치로 감싸서 바로 호출가능하게 객체로바꿈
+보통 스토어 인스턴스에서 바로 디스패치를 호출하면됨 리액트-리덕스가 디스패치함수를 제공해주니 그냥 쓰면됨
+bindActionCreators를 사용하는곳은 리덕스를 상관하지 않는 컴퍼넌트로 액션 생산자를 넘기는데 디스패치나 리덕스 스토어는 넘기기 싫을때 씀
+인자로는 actionCreators, dispatch사용함
+
+[Reselect...React/redux최적화]
+리액트랑 리덕스 같이 쓰면 관심사를 분리할 수 있는 좋은 조합이다.
+React에서 가장 오래걸리는 작업은 렌더링 싸이클이다.
+컴퍼넌트 state,props가 변경되기 시작하면 렌더링 싸이클이 발생한다.
+
+reselect는 첫번쨰 파라미터 배열안에 있는 함수들이 반환하는 값이 이전과 같으면 마지막 파라미터로 준 함수를 실행하지 않는다.
+개발 할때 이런 최적화를 하면 어플리케이션이 복잡해도 쓸만한 성능 보장됨.
+
+---
+
+[가볍게-REDUX-SAGA]
+React X Redux만으로는 아직 불편합니다.
+
+- Reducer안에 부작용이 생길 처리를 하면 안된다.
+  라는 원칙이 있다.
+- 같은 입력에 대해 확률적으로 다른 결과가 나오는 처리
+- 지연 처리
+- HTTP 리퀘스트 처리
+
+이런거 기본적으로 리듀서에서 못씀...그럼 어따씀?
+
+- Component안
+- ActionCreator안
+- mapDispatchToProps안 에다가 써야함...
+  지금까지 connect된 component로 부터 action이 dispatch되면 그 Reducer를 향한다 고만 한정지어 사용해옴.
+  새로운 방법을 원한다 ??? SAGA쓰자.
+
+Redux - SAGA는 제너레이터 함수라 비동기 처리를 간단히 다룰 수 있다.
+
+1. yield take(ACTION_TYPE)으로 지정한 action의 발생을 감지한다.
+2. 가져온 액션을 구워먹던 삶아 먹던 맘대로 하면됨
+3. yield put(action)의 결과를 다른 action으로 내보낼 수 있다...
+
+일단 기본적으로 이런게 가능함.
+내보낸 액션은 리듀서를 향하게도 할 수 있고 자기 자신을 사가에 다시 올 수도 있고.
+
+---
+
+[REDUX-SAGA]
+redux-thunk다음으로 많이 사용됨.
+사가는 성크가 해결 못한 다양한 작업을 처리 가능하다.
+
+1. 비동기 작업시 기존 요청을 취소 처리할 수 있다.
+2. 특정 액션이 발생했을 때 이에 따라 다른 액션이 디스패치되게끔 하거나, 자바스크립트 코드를 실행 할 수 있다.
+3. 웹소캣을 사용하는 경우 Channel이라는 기능을 사용하여 더욱 효율적으로 코드를 관리 할 수 있다.
+4. API 요청이 실패 할 때 재요청 할 수 있는 작업을 할 수 있다.
+
+[Generator]
+generator는 함수를 작성할 때 함수를 특정 구간에 멈춰놓을 수도 있고, 원할 때 다시 돌아가게 할 수도 있다.
+또한 그 결과값을 여러번 반환 할 수도 있다.
+
+---
+
+[HOC]
+
+login체크
+디버깅 체크
+
+==> https://velog.io/@hwang-eunji/React-%EA%B3%A0%EC%B0%A8-%EC%BB%B4%ED%8F%AC%EB%84%8C%ED%8A%B8-HOC-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0

@@ -40,7 +40,7 @@ const HeadTodoForm = styled.div`
   }
 `;
 
-function TodoForm({ addTodo, name, checked }) {
+function TodoForm({ addTodo }) {
   const [input, setInput] = useState('');
 
   const handleChange = (e) => {
@@ -51,8 +51,7 @@ function TodoForm({ addTodo, name, checked }) {
   const handleSubmit = () => {
     addTodo({
       id: Date.now(),
-      name: input,
-      checked: false
+      name: input
     });
     setInput('');
   };
@@ -69,10 +68,9 @@ function TodoForm({ addTodo, name, checked }) {
   );
 }
 
-const mapStateToProps = ({ name, addTodo, checked }) => ({
+const mapStateToProps = ({ name, addTodo }) => ({
   name,
-  addTodo,
-  checked
+  addTodo
 });
 
 const mapDispatchToProps = (dispatch) => ({

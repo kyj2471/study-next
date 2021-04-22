@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { deleteTodo, updateTodo, checkedTodo } from '../store/actions/actions';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+
 const TodoItemFull = styled.div`
   display: flex;
   justify-content: space-between;
@@ -44,7 +45,7 @@ const TodoItemFull = styled.div`
 `;
 
 function TodoItem({ todo, deleteTodo, updateTodo, checkedTodo, name }) {
-  const [IsEditTodo, setIsEditTodo] = useState(false);
+  const [isEditTodo, setIsEditTodo] = useState(false);
   const [input, setInput] = useState(todo.name);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -53,10 +54,7 @@ function TodoItem({ todo, deleteTodo, updateTodo, checkedTodo, name }) {
       ...todo,
       name: input
     });
-    if (IsEditTodo) {
-      setInput(todo.name);
-    }
-    setIsEditTodo(!IsEditTodo);
+    setIsEditTodo(!isEditTodo);
   };
 
   const handleChange = (e) => {
@@ -70,31 +68,22 @@ function TodoItem({ todo, deleteTodo, updateTodo, checkedTodo, name }) {
 
   const handleChecked = () => {
     checkedTodo({ ...todo });
-    if (isChecked) {
-      setIsChecked(todo.checked);
-    }
-    setIsChecked(!isChecked);
+    setIsChecked(todo.checked);
   };
-
-  // const handleChecked = () => {
-  //   checkedTodo(todo);
-  //   console.log(todo);
-  //   console.log(todo.checked);
-  // };
 
   const todoClassName = todo.checked ? 'doneTodo' : 'notDoneTodo';
 
   return (
     <TodoItemFull>
       <div className="listItems">
-        {IsEditTodo ? (
+        {isEditTodo ? (
           <input type="text" value={name} onChange={handleChange} />
         ) : (
           <div className={todoClassName}>{todo.name}</div>
         )}
       </div>
       <div>
-        <button onClick={handleUpdate}>{IsEditTodo ? '변경' : '수정'}</button>
+        <button onClick={handleUpdate}>{isEditTodo ? '변경' : '수정'}</button>
         <button onClick={handleDelete}>삭제</button>
         <button onClick={handleChecked}>완료</button>
       </div>

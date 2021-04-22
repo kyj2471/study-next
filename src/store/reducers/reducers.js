@@ -9,29 +9,30 @@ const initialState = [
 ];
 
 export const reducer = (state = initialState, action) => {
-  let newTodos;
+  let newTodos = [...state];
+
   switch (action.type) {
     case ADD_TODO:
-      newTodos = [...state];
-      return state.concat(action.payload);
+      return newTodos.concat(action.payload);
     case DELETE_TODO:
-      newTodos = [...state];
       newTodos = newTodos.filter((todo) => todo.id !== action.payload);
       return newTodos;
     case UPDATE_TODO:
-      newTodos = [...state];
-      const index = newTodos.findIndex((todo) => todo.id === action.payload.id);
-      if (index !== -1) {
-        newTodos[index] = action.payload;
-        return newTodos;
-      }
+      return updateTodo(newTodos, action);
     case CHECKED_TODO:
-      newTodos = [...state];
-      const findCheckedIndex = newTodos.findIndex((todo) => todo.id === action.payload.id);
-      if (findCheckedIndex != -1) {
-        newTodos[findCheckedIndex].checked = !newTodos[findCheckedIndex].checked;
-        return newTodos;
-      }
+      return checkedTodo(newTodos, action);
   }
   return state;
 };
+
+function updateTodo(newTodos, action) {
+  const index = newTodos.findIndex((todo) => todo.id === action.payload.id);
+  newTodos[index] = action.payload;
+  return newTodos;
+}
+
+function checkedTodo(newTodos, action) {
+  const findCheckedIndex = newTodos.findIndex((todo) => todo.id === action.payload.id);
+  newTodos[findCheckedIndex].checked = !newTodos[findCheckedIndex].checked;
+  return newTodos;
+}
