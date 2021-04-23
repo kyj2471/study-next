@@ -13,10 +13,9 @@ export const reducer = (state = initialState, action) => {
 
   switch (action.type) {
     case ADD_TODO:
-      return newTodos.concat(action.payload);
+      return addTodo(newTodos, action);
     case DELETE_TODO:
-      newTodos = newTodos.filter((todo) => todo.id !== action.payload);
-      return newTodos;
+      return deleteTodo(newTodos, action);
     case UPDATE_TODO:
       return updateTodo(newTodos, action);
     case CHECKED_TODO:
@@ -24,6 +23,15 @@ export const reducer = (state = initialState, action) => {
   }
   return state;
 };
+
+function addTodo(newTodos, action) {
+  return newTodos.concat(action.payload);
+}
+
+function deleteTodo(newTodos, action) {
+  newTodos = newTodos.filter((todo) => todo.id !== action.payload);
+  return newTodos;
+}
 
 function updateTodo(newTodos, action) {
   const index = newTodos.findIndex((todo) => todo.id === action.payload.id);
